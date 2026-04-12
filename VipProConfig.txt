@@ -74,7 +74,7 @@ deleteHeader = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(r
 # --- CÁC APP BỔ SUNG THÊM ---
 
 # Tinder (Lưu ý: Chỉ bypass UI & Chặn quảng cáo, không bypass được Match logic từ server)
-Tinder = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/v2\/(profile|user),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/tinder.js
+Tinder = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/v2\/profile,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/tinder.js
 
 # VSCO (Mở khoá toàn bộ Filter/Premium)
 VSCO = type=http-response,pattern=^https:\/\/vsco\.co\/api\/subscriptions\/[0-9.]+\/user-subscriptions,requires-body=1,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/vsco.js
