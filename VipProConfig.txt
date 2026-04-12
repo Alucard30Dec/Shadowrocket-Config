@@ -1,6 +1,6 @@
 #!name = All In One Pro Max Ultimate
-#!desc = YouTube + Locket + SoundCloud + Spotify + Tinder + VSCO + Duolingo + Canva + Nhiều App khác
-#!author = Gấu Lỏz CUTO_Tổng hợp các URL trên mạng (Customized)
+#!desc = YouTube + Spotify + VSCO + Tinder Gold + Xmind + Notability + Mimo + Nhiều App Khác
+#!author = Gấu Lỏz CUTO_Tổng hợp các URL trên mạng (Customized v4 - Tinder Gold Fix)
 
 #Shadowrocket Unlock nhiều app vip
 
@@ -34,13 +34,7 @@ youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com
 youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/youtube.response.js,argument="{"lyricLang":"vi","captionLang":"vi","blockUpload":true,"blockImmersive":true,"debug":false}"
 
 # ===== Spotify iOS15 (app2smile) =====
-#!name=Spotify(iOS15)
-#!desc=部分解锁premium,建议重新登录,音质不能设置为超高
-# 1. 搜索界面 歌单/歌曲可以随意切换完全播放
-# 2. 音乐库已点赞歌曲随意切换完全播放
-
 spotify-json = type=http-request,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/,requires-body=0,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-json.js
-
 spotify-proto = type=http-response,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js,script-update-interval=0
 
 #SoundCloud
@@ -67,27 +61,45 @@ Camscanner = type=http-response,pattern=https:\/\/(api|api-cs.*)\.intsig\.net\/p
 #BeautyPlus
 BeautyPlus = type=http-response,pattern=https:\/\/(api\.mr\.pixocial\.com\/v1\/manual_unlock|newbeee-api\.beautyplus\.com\/api\/v1\/asset\/balance),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/BeautyPlus.js
 
-#Locket (Bypass RevenueCat API - Có thể unlock nhiều app dùng chung API này)
+#Locket & RevenueCat API Bypass (Mở khoá hàng loạt app dùng chung API này)
 revenuecat = type=http-response,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/Locket_DuyVinh09.js
 deleteHeader = type=http-request,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts|subscribers),script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/deleteHeader.js,timeout=60
 
-# --- CÁC APP BỔ SUNG THÊM ---
+# ===== TINDER GOLD - Cập nhật v4 =====
+# Script 1: Mở khoá profile Gold (v2 profile API)
+Tinder_Profile = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/v2\/profile(\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/tinder.js,timeout=60
 
-# Tinder (Lưu ý: Chỉ bypass UI & Chặn quảng cáo, không bypass được Match logic từ server)
-Tinder = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/v2\/profile,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/tinder.js
+# Script 2: Intercept purchases/subscription endpoint (dùng RevenueCat bypass)
+Tinder_Purchase = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/(v2\/)?(purchases|subscription|products),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/tinder.js,timeout=60
 
-# VSCO (Mở khoá toàn bộ Filter/Premium)
+# Script 3: Onboarding & user metadata (catch thêm endpoint mới)
+Tinder_Meta = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/v2\/(onboarding\/fields|user\/recs|updates),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/tinder.js,timeout=60
+# ===== END TINDER GOLD =====
+
 VSCO = type=http-response,pattern=^https:\/\/vsco\.co\/api\/subscriptions\/[0-9.]+\/user-subscriptions,requires-body=1,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/vsco.js
-
-# Duolingo (Mở Super Duolingo, vô hạn tim)
 Duolingo = type=http-response,pattern=^https:\/\/(www|android-api)\.duolingo\.com\/201.+\/users,requires-body=1,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/duolingo.js
-
-# Canva (Mở khoá UI Pro)
 Canva = type=http-response,pattern=^https:\/\/api\.canva\.com\/_api\/gateway\/user-profiles\/v\d\/users\/me\/profile,requires-body=1,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/canva.js
+
+# --- CÁC APP BỔ SUNG MỚI (PRODUCTIVITY & EDUCATION) ---
+
+# Xmind (Mở khoá tính năng Premium vẽ Mindmap)
+Xmind = type=http-response,pattern=^https?:\/\/.*\.xmind\.(net|com)\/\_res\/devices,requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/xmind.js
+
+# Notability (Mở khoá Plus)
+Notability = type=http-response,pattern=^https:\/\/notability\.com\/(global|subscriptions),requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/notability.js
+
+# Mimo (Mở khoá khoá học lập trình Pro)
+Mimo = type=http-response,pattern=^https:\/\/api\.getmimo\.com\/v1\/users\/.*\/subscriptions,requires-body=1,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/mimo.js
+
+# Remini (Mở khoá Pro làm nét ảnh AI)
+Remini = type=http-response,pattern=^https:\/\/.*\.remini\.ai\/v\d\/.+,requires-body=1,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/remini.js
+
+# Bilibili (Mở khoá UI VIP)
+Bilibili = type=http-response,pattern=^https:\/\/app\.bilibili\.com\/x\/v2\/account\/myinfo,requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/bilibili_vip.js
 
 
 [Map Local]
 ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=200
 
 [MITM]
-hostname = %APPEND%, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, -redirector*.googlevideo.com, premium*.truecaller.com, sub.store, api.revenuecat.com, api-mobile.soundcloud.com, api.picsart.com, us-central1-alight-creative.cloudfunctions.net, api-sub.meitu.com, api-account.kinemasters.com, ap*.intsig.net, api.mr.pixocial.com, newbeee-api.beautyplus.com, spclient.wg.spotify.com, *spclient.spotify.com, api.gotinder.com, vsco.co, *.duolingo.com, api.canva.com
+hostname = %APPEND%, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, -redirector*.googlevideo.com, premium*.truecaller.com, sub.store, api.revenuecat.com, api-mobile.soundcloud.com, api.picsart.com, us-central1-alight-creative.cloudfunctions.net, api-sub.meitu.com, api-account.kinemasters.com, ap*.intsig.net, api.mr.pixocial.com, newbeee-api.beautyplus.com, spclient.wg.spotify.com, *spclient.spotify.com, api.gotinder.com, vsco.co, *.duolingo.com, api.canva.com, *.xmind.net, *.xmind.com, notability.com, api.getmimo.com, *.remini.ai, app.bilibili.com
