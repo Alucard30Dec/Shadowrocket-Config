@@ -26,6 +26,23 @@ DOMAIN-SUFFIX,whoer.net,DIRECT
 DOMAIN-SUFFIX,ip.sb,DIRECT
 DOMAIN-SUFFIX,test-ipv6.com,DIRECT
 
+# Bỏ qua proxy cho mạng nội bộ (LAN) để tăng tốc độ kết nối local và giảm tải proxy
+IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+IP-CIDR6,::1/128,DIRECT,no-resolve
+IP-CIDR6,fe80::/10,DIRECT,no-resolve
+GEOIP,LAN,DIRECT
+
+# Geo-Unblock: Buộc YouTube đi qua Proxy để xem nội dung bị chặn theo khu vực (ví dụ: BWF live)
+DOMAIN-SUFFIX,youtube.com,PROXY
+DOMAIN-SUFFIX,googlevideo.com,PROXY
+
+# Đi trực tiếp (không qua Proxy) đối với toàn bộ IP tại Việt Nam để đạt tốc độ tối đa
+GEOIP,VN,DIRECT
+
 # Mobile browser ad/tracker blocking
 DOMAIN-SUFFIX,doubleclick.net,REJECT
 DOMAIN-SUFFIX,googlesyndication.com,REJECT
@@ -45,6 +62,9 @@ DOMAIN-SUFFIX,unityads.unity3d.com,REJECT
 DOMAIN-SUFFIX,applovin.com,REJECT
 DOMAIN-SUFFIX,vungle.com,REJECT
 DOMAIN-SUFFIX,ironsrc.com,REJECT
+
+# Đẩy các kết nối quốc tế hoặc không xác định còn lại qua Proxy
+FINAL,PROXY
 
 [Header Rewrite]
 ^https?://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$) header-del x-revenuecat-etag
