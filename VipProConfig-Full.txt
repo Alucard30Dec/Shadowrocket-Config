@@ -1,8 +1,8 @@
-#!name = All In One Speed First
-#!desc = Speed-first: YouTube Premium + Spotify Premium + Tinder Gold + RevenueCat VIP
-#!author = Customized speed-first profile
+#!name = All In One Full Unlock
+#!desc = Full unlock: YouTube + Spotify + VSCO + Tinder Gold + Xmind + Notability + Mimo + More
+#!author = Customized full-unlock profile
 
-# Shadowrocket speed-first profile
+# Shadowrocket full-unlock profile
 
 [Rule]
 # Keep YouTube on TCP so rewrite/MITM remains stable
@@ -61,8 +61,11 @@ http-request ^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:4
 (^https?:\/\/[\w-]+\.googlevideo\.com\/(?!dclk_video_ads).+?)&ctier=L(&.+?),ctier,(.+) $1$2$3 302
 
 [Script]
-# Speed-first core unlocks only
-# Kept: YouTube Premium, Spotify Premium, RevenueCat VIP, Tinder Gold
+
+# Sub-Store
+Sub-Store Core=type=http-request,pattern=^https?:\/\/sub\.store\/((download)|api\/(preview|sync|(utils\/node-info))),script-path=https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store-1.min.js,requires-body=true,timeout=120
+Sub-Store Simple=type=http-request,pattern=^https?:\/\/sub\.store,script-path=https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store-0.min.js,requires-body=true
+Sub-Store Sync=type=cron,cronexp=0 0 * * *,wake-system=1,timeout=120,script-path=https://github.com/sub-store-org/Sub-Store/releases/latest/download/cron-sync-artifacts.min.js
 
 # YouTube Premium
 youtube.request = type=http-request,pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|reel\/reel_watch_sequence|get_watch),requires-body=1,max-size=-1,binary-body-mode=1,engine=jsc,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/youtube.response.js
@@ -71,6 +74,30 @@ youtube.response = type=http-response,pattern=^https:\/\/youtubei\.googleapis\.c
 # Spotify Premium
 spotify-json = type=http-request,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/,requires-body=0,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-json.js
 spotify-proto = type=http-response,pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$,requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js,script-update-interval=0
+
+# SoundCloud
+SoundCloudGo+=type=http-response,pattern=https://api-mobile.soundcloud.com/configuration/ios,requires-body=1,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/SoundCloudGoPlus.js
+
+# AlightMotion
+AlightMotion = type=http-response,pattern=^https:\/\/us-central1-alight-creative\.cloudfunctions\.net\/getAccountStatusAndLicenses,requires-body=true,max-size=131072,timeout=10,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/AlightMotion.js
+
+# PicsArt
+PicsArt = type=http-request,pattern=^https:\/\/api\.picsart\.com\/gw-v2\/shop\/subscription\/apple\/purchases,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/PicsArt.js,requires-body=true,timeout=60
+
+# Wink
+Wink =type=http-response,pattern=^https?:\/\/api-sub\.meitu\.com\/v2\/user\/vip_info_by_group\.json,requires-body=1,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/WinkVipCrack.js
+
+# Truecaller
+Truecaller = type=http-response,pattern=^https://premium-(.+)\.truecaller\.com/v\d/(subscriptions|products\/apple),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/TrueCaller.js
+
+# Kinemaster
+Kinemaster = type=http-response,pattern=^https:\/\/api-account\.kinemasters\.com\/v\d\/user\/subscribe$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/Kinemaster.js
+
+# CamScanner
+Camscanner = type=http-response,pattern=https:\/\/(api|api-cs.*)\.intsig\.net\/purchase\/cs\/query_prop,requires-body=1,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/camScanner.js
+
+# BeautyPlus
+BeautyPlus = type=http-response,pattern=https:\/\/(api\.mr\.pixocial\.com\/v1\/manual_unlock|newbeee-api\.beautyplus\.com\/api\/v1\/asset\/balance),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/BeautyPlus.js
 
 # RevenueCat VIP unlock for many apps using the same purchase API
 revenuecat = type=http-response,pattern=^https:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,max-size=-1,timeout=60,script-path=https://raw.githubusercontent.com/duyvinh09/Module_IOS/refs/heads/main/js/Locket_DuyVinh09.js
@@ -81,8 +108,18 @@ Tinder_Profile = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/v2\/p
 Tinder_Purchase = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/(v2\/)?(purchases|subscription|products),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/tinder.js,timeout=60
 Tinder_Meta = type=http-response,pattern=^https:\/\/api\.gotinder\.com\/v2\/(onboarding\/fields|user\/recs|updates),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/tinder.js,timeout=60
 
+# Other unlocks
+VSCO = type=http-response,pattern=^https:\/\/vsco\.co\/api\/subscriptions\/[0-9.]+\/user-subscriptions,requires-body=1,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/vsco.js
+Duolingo = type=http-response,pattern=^https:\/\/(www|android-api)\.duolingo\.com\/201.+\/users,requires-body=1,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/duolingo.js
+Canva = type=http-response,pattern=^https:\/\/api\.canva\.com\/_api\/gateway\/user-profiles\/v\d\/users\/me\/profile,requires-body=1,script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/canva.js
+Xmind = type=http-response,pattern=^https?:\/\/.*\.xmind\.(net|com)\/\_res\/devices,requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/xmind.js
+Notability = type=http-response,pattern=^https:\/\/notability\.com\/(global|subscriptions),requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/notability.js
+Mimo = type=http-response,pattern=^https:\/\/api\.getmimo\.com\/v1\/users\/.*\/subscriptions,requires-body=1,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/mimo.js
+Remini = type=http-response,pattern=^https:\/\/.*\.remini\.ai\/v\d\/.+,requires-body=1,script-path=https://raw.githubusercontent.com/chxm1023/Rewrite/main/remini.js
+Bilibili = type=http-response,pattern=^https:\/\/app\.bilibili\.com\/x\/v2\/account\/myinfo,requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/bilibili_vip.js
+
 [Map Local]
 ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=200
 
 [MITM]
-hostname = %APPEND%, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, -redirector*.googlevideo.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api.gotinder.com
+hostname = %APPEND%, *.googlevideo.com, youtubei.googleapis.com, www.youtube.com, s.youtube.com, -redirector*.googlevideo.com, premium*.truecaller.com, sub.store, api.revenuecat.com, api-mobile.soundcloud.com, api.picsart.com, us-central1-alight-creative.cloudfunctions.net, api-sub.meitu.com, api-account.kinemasters.com, ap*.intsig.net, api.mr.pixocial.com, newbeee-api.beautyplus.com, spclient.wg.spotify.com, *spclient.spotify.com, api.gotinder.com, vsco.co, *.duolingo.com, api.canva.com, *.xmind.net, *.xmind.com, notability.com, api.getmimo.com, *.remini.ai, app.bilibili.com
