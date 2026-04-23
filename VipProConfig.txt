@@ -40,6 +40,20 @@ GEOIP,LAN,DIRECT
 DOMAIN-SUFFIX,youtube.com,PROXY
 DOMAIN-SUFFIX,googlevideo.com,PROXY
 
+# Telegram: luôn đi qua Proxy để tránh bị chặn theo mạng/khu vực
+DOMAIN-SUFFIX,telegram.org,PROXY
+DOMAIN-SUFFIX,telegram.me,PROXY
+DOMAIN-SUFFIX,t.me,PROXY
+DOMAIN-SUFFIX,telegra.ph,PROXY
+DOMAIN-SUFFIX,telesco.pe,PROXY
+IP-CIDR,91.108.4.0/22,PROXY,no-resolve
+IP-CIDR,91.108.8.0/21,PROXY,no-resolve
+IP-CIDR,91.108.16.0/21,PROXY,no-resolve
+IP-CIDR,91.108.56.0/22,PROXY,no-resolve
+IP-CIDR,149.154.160.0/20,PROXY,no-resolve
+IP-CIDR6,2001:b28:f23d::/48,PROXY,no-resolve
+IP-CIDR6,2001:67c:4e8::/48,PROXY,no-resolve
+
 # Đi trực tiếp (không qua Proxy) đối với toàn bộ IP tại Việt Nam để đạt tốc độ tối đa
 GEOIP,VN,DIRECT
 
