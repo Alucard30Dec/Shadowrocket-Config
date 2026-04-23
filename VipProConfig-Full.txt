@@ -47,6 +47,8 @@ DOMAIN-SUFFIX,vungle.com,REJECT
 DOMAIN-SUFFIX,ironsrc.com,REJECT
 
 # Telegram: luôn đi qua Proxy để tránh bị chặn theo mạng/khu vực
+PROCESS-NAME,Telegram,PROXY
+DOMAIN-KEYWORD,telegram,PROXY
 DOMAIN-SUFFIX,telegram.org,PROXY
 DOMAIN-SUFFIX,telegram.me,PROXY
 DOMAIN-SUFFIX,t.me,PROXY
